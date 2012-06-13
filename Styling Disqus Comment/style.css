@@ -1,0 +1,115 @@
+/*
+* This is stylesheet for styling Disqus comment on my blog
+* http://takien.com
+* @author takien
+* version 1.0
+*/
+
+.dsq-comment-meta,
+.dsq-comment-actions{
+	overflow:visible !important;
+}
+
+/*disqus*/
+.dsq-comment{
+    border:1px dotted #dce1e6;
+    border-top-color:#fff;
+    border-left-color:#fff;
+    border-right-color:#fff;
+    padding:3px !important;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    border-radius:3px;
+    margin-bottom:0 !important
+}
+.dsq-comment:hover{
+    background:#f2f9fd;
+    border:1px solid #bec8d1;
+}
+.dsq-avatar{
+    margin-left:2px;
+}
+.dsq-comment-footer{
+    font-size:13px;
+    visibility:hidden
+}
+.dsq-comment:hover .dsq-comment-footer {
+   visibility:visible
+}
+.dsq-founder .dsq-commenter-name{
+    color:#666666 !important
+}
+.dsq-comment code{
+    background:#f0f0f0;
+    border-top:1px solid #cccccc;
+    border-left:1px solid #cccccc;
+    border-right:1px solid #fff;
+    border-bottom:1px solid #fff;
+    display:block;
+    padding:5px
+}
+.dsq-comment code:hover{
+    background:#fff;
+    border-right:1px solid #cccccc;
+    border-bottom:1px solid #cccccc;
+}
+.dsq-comment-header{
+    border:none !important;
+    background:none !important;
+    padding: 0 !important;
+    margin:0 !important;
+}
+.dsq-commenter-name{
+    color:#666666 !important;
+}
+.dsq-comment:hover{
+    margin-left:0 !important
+}
+div .dsq-textarea-background{
+   background:#fffeef !important;
+   box-shadow:none;
+}
+div .dsq-trackback-url input{
+   width:100%;
+   border:none !important;
+   background:none !important;
+   box-shadow:none !important;
+   color:#cccccc !important;
+   font-size:12px !important;
+}
+.dsq-editedtxt{
+	display:none !important
+}
+.dsq-comment-message{
+   font-size:13px !important;
+}
+#dsq-footer em{
+	display:none !important
+}
+#dsq-footer{
+   margin:10px 0 !important;
+   padding:0 !important
+}
+#dsq-content h3{
+   margin:0 0 10px !important;
+   font-size:16px !important;
+}
+div .dsq-trackback-url {
+   display:none
+}
+#dsq-content ul li cite a{
+   font-weight:bold;
+}
+#dsq-content ul li cite,
+#dsq-content ul li p.dsq-trackback-date,
+#dsq-content ul li p.dsq-trackback-excerpt{
+   font-size:13px !important
+}
+#dsq-content ul li p.dsq-trackback-excerpt{
+    margin-bottom:15px;
+    padding-bottom:5px;
+    border-bottom:1px dotted #dce1e6;
+}
+#primary-nav  ul li a{
+	float:left;
+}
