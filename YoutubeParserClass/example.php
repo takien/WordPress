@@ -4,7 +4,7 @@
 */
 require_once('youtube-parser.php');
 
-$youtube = new ParseYoutube;
+$youtube = new YoutubeParser;
 $youtube->set('source',file_get_contents('pageyoutube.html'));
 $youtube->set('unique',true);
 
