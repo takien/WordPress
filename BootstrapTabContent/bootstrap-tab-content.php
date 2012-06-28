@@ -15,6 +15,7 @@
 * 
 * In this version you must add manually Twitter bootstrap tabs library (CSS and JS)
 * See here http://twitter.github.com/bootstrap/components.html#navs
+* @param string direction tabs-left, tabs-below, tabs-right
 * @author: takien
 * @version: 1.0
 * @url: http://takien.com
