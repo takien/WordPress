@@ -1,9 +1,11 @@
 <?php
+defined('ABSPATH') or die();
 /**
 * Easy get WordPress attachments image
-* @author : contact@takien.com
-* @version: 0.3
-* @update : Dec 25, 2012
+* @author : takien
+* @url    : http://takien.com
+* @version: 0.3.1
+* @update : Aug 27, 2013
 */
 
 if(!class_exists('EasyAttachments')){
@@ -23,10 +25,7 @@ if(!class_exists('EasyAttachments')){
 		function add_theme_support($feature=''){
 			return $feature;
 		}
-		function set($what,$value){
-			$this->$what = $value;
-		}
-		
+
 		private function get_attachment($args=''){
 			$defaults = array(
 				'order'          => $this->order,
@@ -73,20 +72,21 @@ if(!class_exists('EasyAttachments')){
 			$return     = $images = Array();
 			$id         = $id ? $id : get_the_ID();
 			$captions   = false;
-			$content    = get_the_content($id);
+			//$content    = get_the_content($id);
+			$content    = get_post_field('post_content', $id); 
 			$captions   = $this->extract_caption($content);
 			
 			foreach($captions as $k=>$caption){
 				$image                     = $caption['src'];
 				$images[$k]['thumbnail']   = preg_replace('/\-\d{3}x\d{3}\./i','-'.get_option('thumbnail_size_w').'x'.get_option('thumbnail_size_h').'.',$image);
+				$images[$k]['thumbnail']   = $image;
 				$images[$k]['medium']      = preg_replace('/\-\d{3}x\d{3}\./i','-'.get_option('medium_size_w').'x'.get_option('medium_size_h').'.',$image);
 				$images[$k]['large']       = preg_replace('/\-\d{3}x\d{3}\./i','-'.get_option('large_size_w').'x'.get_option('large_size_h').'.',$image);
 				$images[$k]['full']        = preg_replace('/\-\d{3}x\d{3}\./i','.',$image);
 				
 				$images[$k]['parent']      = $id;
-				$desc 	                   = isset($caption['caption']) ? explode('//',$caption['caption']) : Array('');
-				$images[$k]['author']	   = end($desc);
-				$images[$k]['description'] = $desc[0];
+				$images[$k]['description'] = isset($caption['caption']) ? $caption['caption'] : '';
+				
 			}
 			
 			if($size == 'all'){
@@ -109,7 +109,8 @@ if(!class_exists('EasyAttachments')){
 		function output($size='thumbnail',$postid='',$featured=false) {
 			$postid = $postid ? $postid : get_the_ID();
 			$return = false;
-			$content = get_the_content($postid);
+			//$content = get_the_content($postid);
+			$content = get_post_field('post_content', $postid); 
 			/*feat*/
 			if($featured AND has_post_thumbnail()){
 				$att = wp_get_attachment_image_src(get_post_thumbnail_id($postid),$size);
@@ -120,7 +121,7 @@ if(!class_exists('EasyAttachments')){
 				$return = $this->get_caption($postid,$size);
 			}
 			/*img src*/
-			else if(preg_match('/<img /i',$content)){
+			else if(preg_match('/<img /i',$content) AND ('all' !== $size)) {
 				
 				$return['src'] = $this->get_img_src($content);
 				
@@ -134,14 +135,13 @@ if(!class_exists('EasyAttachments')){
 					$images[$k]['large']     = $attach->large[0];
 					$images[$k]['full']      = $attach->full[0];
 					$images[$k]['parent']    = $attach->post_parent;
-					
-					$desc 	= explode('//',$attach->post_content);
-					$images[$k]['author']	= end($desc);
-					$images[$k]['description'] = $desc[0];
+					$images[$k]['description'] = $attach->post_content;
 				}
+				
 				
 				if($size == 'all'){
 					$return = $images;
+					
 				}
 				else {
 					$return['src'] 	= $images[0][$size];
@@ -155,13 +155,16 @@ if(!class_exists('EasyAttachments')){
 	}
 }
 
+if(!function_exists('easy_get_image')) {
 function easy_get_image($size='thumbnail',$postid='',$featured=false) {
 	$return = new EasyAttachments;
 	$return = $return->output($size,$postid,$featured);
 	return $return;
 }
+}
 
-/*deprecated*/
-function post_image($size='thumbnail',$postid='',$featured=false){
-	return easy_get_image($size,$postid,$featured);
+if(!function_exists('post_image')) {
+	function post_image($size='thumbnail',$postid='',$featured=false) {
+		return easy_get_image($size,$postid,$featured);
+	}
 }
